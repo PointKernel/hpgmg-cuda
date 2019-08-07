@@ -364,7 +364,7 @@ int main(int argc, char **argv){
   #ifndef TEST_ERROR
 
   double AverageSolveTime[3];
-  for(l=0;l<3;l++){
+  for(l=0;l<1;l++){
     if(l>0)restriction(MG_h.levels[l],VECTOR_F,MG_h.levels[l-1],VECTOR_F,RESTRICT_CELL);
     bench_hpgmg(&MG_h,l,a,b,dtol,rtol);
     AverageSolveTime[l] = (double)MG_h.timers.MGSolve / (double)MG_h.MGSolves_performed;

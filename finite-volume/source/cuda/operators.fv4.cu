@@ -148,7 +148,7 @@
 //------------------------------------------------------------------------------------------------------------------------------
 // include smoother
 #include "extra.h"
-#if defined(USE_GSRB) && ( defined(GSRB_STRIDE2) || defined(GSRB_BRANCH) || (defined(GSRB_FP)&&!defined(GSRB_OOP)) )
+#if defined(USE_GSRB) && ( defined(GSRB_STRIDE2) || defined(GSRB_BRANCH) || (defined(GSRB_FP)) )
   #include "stencils/gsrb.h"
 #else
   #ifdef USE_SHM // shared memory

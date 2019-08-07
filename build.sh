@@ -1,12 +1,13 @@
 # find MPI compiler
 CC=`which mpicc`
+#CC=icc
 #CC=`which mpiicc`
 
 # find NVCC compiler
 NVCC=`which nvcc`
 
 # set gpu architectures to compile for
-CUDA_ARCH+="-gencode code=sm_35,arch=compute_35 "
+CUDA_ARCH+="-gencode code=sm_70,arch=compute_70 -Wno-deprecated-declarations -Xptxas -v --maxrregcount=128"
 #CUDA_ARCH+="-gencode code=sm_37,arch=compute_37 "
 #CUDA_ARCH+="-gencode code=sm_52,arch=compute_52 "
 
@@ -24,7 +25,7 @@ OPTS+="-DBOUNDARY_TILE_K=16 "
 OPTS+="-DHOST_LEVEL_SIZE_THRESHOLD=10000 "
 
 # max number of solves after warmup
-#OPTS+="-DMAX_SOLVES=10 "
+OPTS+="-DMAX_SOLVES=10 "
 
 # unified memory allocation options
 OPTS+="-DCUDA_UM_ALLOC "
@@ -35,13 +36,13 @@ OPTS+="-DMPI_ALLOC_ZERO_COPY "
 #OPTS+="-DMPI_ALLOC_PINNED "
 
 # stencil optimizations
-OPTS+="-DUSE_REG "
-OPTS+="-DUSE_TEX "
+#OPTS+="-DUSE_REG "
+#OPTS+="-DUSE_TEX "
 #OPTS+="-DUSE_SHM "
 
 # GSRB smoother options
 #OPTS+="-DGSRB_FP "
-#OPTS+="-DGSRB_STRIDE2 "
+OPTS+="-DGSRB_STRIDE2 "
 #OPTS+="-DGSRB_BRANCH "
 #OPTS+="-DGSRB_OOP "
 
@@ -61,4 +62,4 @@ OPTS+="-DMPICH_SKIP_MPICXX "
 #./configure --CC=$CC --NVCC=$NVCC --CFLAGS="-O2 -fopenmp $OPTS" --NVCCFLAGS="-O2 -lineinfo -lnvToolsExt $OPTS" --CUDAARCH="$CUDA_ARCH" --fv-smoother="cheby" --no-fe
 
 make clean -C build
-make -j3 -C build
+make V=1 -j3 -C build
